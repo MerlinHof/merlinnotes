@@ -1,0 +1,206 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Merlin Notes</title>
+        <meta name="description" content="A fast and clean ai assisted note-taking app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Merlin Notes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <base href="/frontend/" />
+        <link rel="icon" href="src/icon.png" />
+        <link rel="apple-touch-icon" href="src/icon.png" />
+        <link rel="manifest" href="manifest.json" />
+
+        <link rel="stylesheet" href="index.css?v=18" />
+        <script src="helper.js" defer="defer"></script>
+        <script src="FileManager.js" defer="defer"></script>
+        <script src="HistoryManager.js" defer="defer"></script>
+        <script src="PenDrawer.js" defer="defer"></script>
+        <script src="AiManager.js" defer="defer"></script>
+        <script src="CalendarManager.js" defer="defer"></script>
+        <script src="Parser.js" defer="defer"></script>
+        <script src="script.js" defer="defer"></script>
+    </head>
+
+    <body>
+        <div id="mainContainer">
+            <button class="hideButton" id="hideButton1">
+                <img class="tinted" style="--src: url(src/arrow.png)" />
+            </button>
+            <div class="sidebar" id="sidebar1">
+                <div class="textinput inputBar empty" id="searchBar" style="--src: url(src/search.png); --placeholder: &quot;Search&quot;" contenteditable="true"></div>
+                <div id="fileContainer" class="fadingEdgesVertical"></div>
+            </div>
+
+            <div id="toolbar">
+                <div class="buttonGroup">
+                    <button class="imageButton" id="newElementButton">
+                        <img class="tinted" style="--src: url(src/plus.png)" />
+                        <div class="tooltip">Create</div>
+                    </button>
+                    <button class="imageButton" id="moveButton">
+                        <img class="tinted" style="--src: url(src/move.png)" />
+                        <div class="tooltip">Move</div>
+                    </button>
+                    <button class="imageButton" id="deleteButton">
+                        <img class="tinted" style="--src: url(src/delete.png)" />
+                        <div class="tooltip">Delete</div>
+                    </button>
+                    <button class="imageButton" onclick="openOptions()">
+                        <img class="tinted" style="--src: url(src/more.png)" />
+                        <div class="tooltip">More Options</div>
+                    </button>
+                    <!-- <button class="imageButton" onclick="importDocument()">
+                        <img class="tinted" style="--src: url(src/image.png)" />
+                        <div class="tooltip">Add Image / PDF</div>
+                        </button> -->
+                </div>
+                <div class="buttonGroup">
+                    <button class="imageButton selectorButton" id="textModeButton">
+                        <img class="tinted" style="--src: url(src/text.png)" />
+                        <div class="tooltip">Writing Mode</div>
+                    </button>
+                    <button class="imageButton selectorButton" id="drawingModeButton">
+                        <img class="tinted" style="--src: url(src/pen.png)" />
+                        <div class="tooltip">Drawing Mode</div>
+                    </button>
+                    <button class="imageButton selectorButton" id="calendarModeButton">
+                        <img class="tinted" style="--src: url(src/calendar.png)" />
+                        <div class="tooltip">Global Calendar</div>
+                    </button>
+                </div>
+                <div class="buttonGroup" id="text">
+                    <button class="imageButton" id="">
+                        <img class="tinted" style="--src: url(src/search.png)" />
+                        <div class="tooltip">Search Text</div>
+                    </button>
+                    <button class="imageButton" id="">
+                        <img class="tinted" style="--src: url(src/bold.png)" />
+                        <div class="tooltip">Bold</div>
+                    </button>
+                    <button class="imageButton" id="">
+                        <img class="tinted" style="--src: url(src/strikethrough.png)" />
+                        <div class="tooltip">Strike Through</div>
+                    </button>
+                    <button class="imageButton" id="">
+                        <img class="tinted" style="--src: url(src/marker.png)" />
+                        <div class="tooltip">Highlight</div>
+                    </button>
+                    <button class="imageButton" id="">
+                        <img class="tinted" style="--src: url(src/copy.png)" />
+                        <div class="tooltip">Copy Text</div>
+                    </button>
+                </div>
+                <div class="buttonGroup" id="draw">
+                    <button class="imageButton selectorButton2" id="penButton">
+                        <img class="tinted" style="--src: url(src/pen.png)" />
+                        <div class="tooltip">Ball Pen</div>
+                    </button>
+                    <button class="imageButton selectorButton2" id="markerButton">
+                        <img class="tinted" style="--src: url(src/marker.png)" />
+                        <div class="tooltip">Marker</div>
+                    </button>
+                    <button class="imageButton selectorButton2" id="laserButton">
+                        <img class="tinted" style="--src: url(src/laser.png)" />
+                        <div class="tooltip">Laser Pointer</div>
+                    </button>
+                    <button class="imageButton selectorButton2" id="eraserButton">
+                        <img class="tinted" style="--src: url(src/eraser.png)" />
+                        <div class="tooltip">Line Eraser</div>
+                    </button>
+                    <button class="imageButton" id="strokeColorButton">
+                        <input type="color" id="strokeColorPicker" value="#2196f3" />
+                        <div class="tooltip">Stroke Color</div>
+                    </button>
+                    <!-- <button class="imageButton" onclick="openDialog('strokeDialog')">
+                        <img class="tinted" style="--src: url(src/size.png)" />
+                        <div class="tooltip">Tool Settings</div>
+                        </button> -->
+                </div>
+                <div class="buttonGroup">
+                    <button class="imageButton" id="undoButton">
+                        <img class="tinted" style="--src: url(src/undo.png)" />
+                        <div class="tooltip">Undo</div>
+                    </button>
+                    <button class="imageButton" id="redoButton">
+                        <img class="tinted" style="--src: url(src/redo.png)" />
+                        <div class="tooltip">Redo</div>
+                    </button>
+                </div>
+                <div class="buttonGroup">
+                    <button class="imageButton" onclick="toggleFullscreen()">
+                        <img class="tinted" style="--src: url(src/fullscreen.png)" />
+                        <div class="tooltip">Toggle fullscreen mode</div>
+                    </button>
+                    <button class="imageButton" onclick="openSettings()">
+                        <img class="tinted" style="--src: url(src/config.png)" />
+                        <div class="tooltip">Settings</div>
+                    </button>
+                </div>
+            </div>
+
+            <div id="canvasContainer" class="fadingEdgesTop">
+                <canvas id="committedCanvas"></canvas>
+                <canvas id="liveCanvas"></canvas>
+            </div>
+
+            <div id="editor" class="centerPanel fadingEdgesVertical" contenteditable="true" spellcheck="false"></div>
+            <div id="calendarPanel" class="centerPanel fadingEdgesVertical">
+                <select id="calendarYearSelector"></select>
+                <div id="calendarRenderContainer"></div>
+            </div>
+
+            <div class="sidebar" id="sidebar2">
+                <div class="buttonGroup tabContainer">
+                    <button class="imageButton selectorButton6" id="aiTabPromptButton">
+                        <img class="tinted" style="--src: url(src/ai.png)" />
+                        <div class="tooltip">Prompts</div>
+                    </button>
+                    <button class="imageButton selectorButton6" id="aiTabChatButton">
+                        <img class="tinted" style="--src: url(src/chat.png)" />
+                        <div class="tooltip">Chat</div>
+                    </button>
+                </div>
+                <div id="aiPromptSectionContainer">
+                    <div id="promptTabContainer"></div>
+                    <div class="textinput" id="aiPromptInput" contenteditable="true"></div>
+                    <div id="aiButtonContainer">
+                        <button onclick="executePrompt(false)">Run</button>
+                        <button class="secondary" onclick="executePrompt(true)">Run Inline</button>
+                    </div>
+                    <div id="aiPromptAnswerText" class="fadingEdgesVertical">...</div>
+                </div>
+                <div id="aiChatSectionContainer">
+                    <div>
+                        <select id="aiChatSelector"></select>
+                        <button class="imageButton" id="newChatButton">
+                            <img class="tinted" style="--src: url(src/plus.png)" />
+                            <div class="tooltip bottom">New Chat</div>
+                        </button>
+                        <button class="imageButton" id="deleteChatButton">
+                            <img class="tinted" style="--src: url(src/delete.png)" />
+                            <div class="tooltip bottom">Delete Chat</div>
+                        </button>
+                        <button class="imageButton" id="incognitoChatButton">
+                            <img class="tinted" style="--src: url(src/incognito.png)" />
+                            <div class="tooltip bottom">Temporary Chat</div>
+                        </button>
+                    </div>
+                    <div id="aiChatMessageContainer" class="fadingEdgesVertical"></div>
+                    <div id="aiChatInputContainer">
+                        <div class="textinput inputBar" id="aiChatInput" style="--src: url(src/ai.png); --placeholder: &quot;Ask Question&quot;" contenteditable="true"></div>
+                        <button class="imageButton" onclick="sendChatMessage()">
+                            <img class="tinted" style="--src: url(src/send.png)" />
+                            <div class="tooltip left">Send (↵)</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button class="hideButton" id="hideButton2">
+                <img class="tinted" style="--src: url(src/arrow.png)" />
+            </button>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,307 @@
+<!-- Dialogs -->
+<div class="dialog hidden" id="settingsDialog" onclick="closeDialog(this)">
+    <div onclick="event.stopPropagation()">
+        <div class="titleBar">
+            <t>Settings</t>
+            <button class="imageButton" onclick="closeDialog(this)">
+                <img class="tinted" style="--src: url(src/close.png)" />
+                <div class="tooltip left">Close Window</div>
+            </button>
+        </div>
+        <div class="settingsElement">
+            <t>Save Settings</t>
+            <t>You need to save and apply settings before closing this window, otherwise your changes will be lost / reverted.</t>
+            <button onclick="saveSettings(this)">Save & Apply Changes</button>
+        </div>
+
+        <div class="settingsElement">
+            <t>Cloud Syncing</t>
+            <t
+                >The library is securely synchronized with the server using these credentials. To connect your library to another device, copy this text and paste it on the other device; the local and
+                remote libraries on the other device will be merged and synced.</t
+            >
+            <div class="textinput inputBar empty" id="cloudSyncCredentialsInput" style="--src: url(src/sync.png); --placeholder: &quot;Cloud Sync Credentials&quot;" contenteditable="true"></div>
+            <button onclick="copyCredentials()">Copy Credentials</button>
+        </div>
+        <div class="settingsElement">
+            <t>Backup Library</t>
+            <t>Create a local backup of your entire library to transport it to another device or to keep valuable data safe for the future.</t>
+            <div>
+                <button onclick="exportToFile()">Export Library to File</button>
+                <button onclick="importFromFile()">Import Library from File</button>
+            </div>
+        </div>
+        <div class="settingsElement">
+            <t>Generative AI</t>
+            <t>Integrate powerful GenAI-Tools backed by OpenAI's language models into Merlin Notes. You can get the (paid) API key at https://platform.openai.com</t>
+            <t>API Key:</t>
+            <div class="textinput inputBar empty" id="apikeyinput" style="--src: url(src/key.png); --placeholder: &quot;API Key&quot;" contenteditable="true"></div>
+            <t>Model Name:</t>
+            <div class="textinput inputBar empty" id="modelnameinput" style="--src: url(src/ai.png); --placeholder: &quot;Model Name&quot;" contenteditable="true"></div>
+            <t>Reasoning Effort:</t>
+            <div class="textinput inputBar empty" id="reasoningeffortinput" style="--src: url(src/thinking.png); --placeholder: &quot;Reasoning Effort&quot;" contenteditable="true"></div>
+        </div>
+        <div class="settingsElement">
+            <t>Editor Customization</t>
+            <t>Customize your writing experience to your needs.</t>
+            <t>Text Size:</t>
+            <select id="editorfontsize">
+                <option value="vs">Very Small (8pt)</option>
+                <option value="s">Small (12pt)</option>
+                <option value="n">Normal (16pt)</option>
+                <option value="l">Large (18pt)</option>
+                <option value="vl">Very Large (24pt)</option>
+            </select>
+            <t>Font Family:</t>
+            <select id="editorfont">
+                <option value="s">System</option>
+                <option value="m">Monospace</option>
+                <option value="f">Futura</option>
+                <option value="g">Georgia</option>
+                <option value="tnr">Times New Roman</option>
+            </select>
+            <t>Tool Bar Position:</t>
+            <select id="toolbarposition">
+                <option value="l">Left</option>
+                <option value="r">Right</option>
+                <option value="t">Top</option>
+                <option value="b">Bottom</option>
+            </select>
+        </div>
+        <div class="settingsElement">
+            <t>Theme Color</t>
+            <t>Customize the theme color to optimize your experience. It affects the appearance of text, buttons and icons.</t>
+            <button class="imageButton" id="themeColorButton">
+                <input type="color" id="themePicker" value="#000000" />
+                <div class="tooltip">Select Theme Color</div>
+            </button>
+        </div>
+
+        <div class="settingsElement">
+            <t>Upgrade to Pro</t>
+            <t>Upgrade to Merlin Notes Pro with a lifetime one-time purchase to unlock the ultimate freedom and productivity by making Merlin Notes yours forever.</t>
+            <button onclick="openDialog('upgradeDialog')">Learn More</button>
+        </div>
+
+        <div class="settingsElement">
+            <t>Other Options</t>
+            <t>Relevant other options</t>
+            <div>
+                <div><input type="checkbox" id="showhiddenfilescheckbox" /><t>Show Hidden Files</t></div>
+                <div><input type="checkbox" id="autocollapsecheckbox" /><t>Collapse Folders on Reload</t></div>
+            </div>
+            <button class="red" onclick="clearAllData()">Delete all Data</button>
+        </div>
+    </div>
+</div>
+
+<div class="dialog hidden" id="strokeDialog" onclick="closeDialog(this)">
+    <div onclick="event.stopPropagation()">
+        <div class="titleBar">
+            <t>Tool Settings</t>
+            <button class="imageButton" onclick="closeDialog(this)">
+                <img class="tinted" style="--src: url(src/close.png)" />
+                <div class="tooltip left">Close Window</div>
+            </button>
+        </div>
+        <div class="settingsElement">
+            <t>Stroke Width</t>
+            <t>Set the width of the stroke</t>
+            <select>
+                <option value="vt">Very Thin (0.5px)</option>
+                <option value="tn">Thin (1px)</option>
+                <option value="n">Normal (2px)</option>
+                <option value="tk">Thick (3.5px)</option>
+                <option value="vt">Very Thick (6px)</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="dialog hidden" id="upgradeDialog" onclick="closeDialog(this)">
+    <div onclick="event.stopPropagation()">
+        <div class="titleBar">
+            <t>Upgrade to Pro</t>
+            <button class="imageButton" onclick="closeDialog(this)">
+                <img class="tinted" style="--src: url(src/close.png)" />
+                <div class="tooltip left">Close Window</div>
+            </button>
+        </div>
+        <div class="settingsElement">
+            <t>Your Pro Advantages</t>
+            <t>Upgrade to Merlin Notes Pro with a lifetime one-time purchase to unlock the ultimate freedom and productivity by making Merlin Notes yours forever.</t>
+            <ul>
+                <li>Sync your Library in Real Time between Devices</li>
+                <li>Share Notes and Folders for Collaboration</li>
+                <li>Work fully offline</li>
+                <li>Unlimited AI-usage by using own API key</li>
+                <li>Extended Customization Options</li>
+                <li>Local Export / Import of Library</li>
+                <li>Encryption</li>
+                <li>No Ads</li>
+            </ul>
+        </div>
+        <div class="settingsElement">
+            <t>The Price to Pay</t>
+            <t>39,99€</t>
+            <button>Upgrade to Pro</button>
+        </div>
+        <div class="settingsElement">
+            <t>Already Upgraded?</t>
+            <t>Enter your key here.</t>
+            <div class="textinput inputBar empty" id="apikeyinput" style="--src: url(src/key.png); --placeholder: &quot;Purchase Key&quot;" contenteditable="true"></div>
+            <button>Restore Purchase</button>
+        </div>
+        <div class="settingsElement">
+            <t>Need Help?</t>
+            <t>Write an email to support here</t>
+            <button>Request Support</button>
+        </div>
+    </div>
+</div>
+
+<div class="dialog hidden" id="optionsDialog" onclick="closeDialog(this)">
+    <div onclick="event.stopPropagation()">
+        <div class="titleBar">
+            <t>More Options</t>
+            <button class="imageButton" onclick="closeDialog(this)">
+                <img class="tinted" style="--src: url(src/close.png)" />
+                <div class="tooltip left">Close Window</div>
+            </button>
+        </div>
+        <div class="settingsElement">
+            <t>Save Changes</t>
+            <t>You need to save and apply changes before closing this window, otherwise your changes will be lost / reverted.</t>
+            <button onclick="saveOptions(this)">Save & Apply Changes</button>
+        </div>
+        <div class="settingsElement">
+            <t>Note Title</t>
+            <t>This is the title of your note / folder. If empty, the first line of the note content is used as a title.</t>
+            <div class="textinput inputBar empty" id="noteTitleInput" style="--src: url(src/note.png); --placeholder: &quot;Title&quot;" contenteditable="true"></div>
+        </div>
+        <div class="settingsElement">
+            <t>Password Lock</t>
+            <t>
+                Lock the note / folder to prevent its contents to be seen without permission. Be aware that this is a soft lock and that it does not encrypt the contents or enforces the lock
+                aggressively. If you lock a folder, all children are also locked. Leave empty to unlock the element.
+            </t>
+            <div class="textinput inputBar empty" id="notePasswordInput" style="--src: url(src/lock.png); --placeholder: &quot;Password&quot;" contenteditable="true"></div>
+        </div>
+        <div class="settingsElement">
+            <t>Share & Collaborate</t>
+            <t> Share either a static copy of the current state of your note or folder, or create a collaboration code for your note or folder, where all changes are synced in real time. </t>
+            <div style="display: flex">
+                <button class="secondary big" onclick="shareNote()">
+                    <img class="tinted" style="--src: url(src/note.png)" />
+                    <t>Static Copy</t>
+                </button>
+                <button class="secondary big" onclick="shareNote(true)">
+                    <img class="tinted" style="--src: url(src/group.png)" />
+                    <t>Collaboration</t>
+                </button>
+            </div>
+            <button class="secondary" onclick="cancelCollaboration()">
+                <img class="tinted" style="--src: url(src/close.png)" />
+                Cancel Collaboration
+            </button>
+        </div>
+        <div class="settingsElement">
+            <t>Note Sorting</t>
+            <t>This influences how notes inside the selected folder are sorted.</t>
+            <select id="noteSorting">
+                <option value="byNameAZ">Name (A-Z)</option>
+                <option value="byNameZA">Name (Z-A)</option>
+                <option value="byCreationDate">Creation Date</option>
+                <option value="byModificationDate">Modification Date</option>
+                <option value="inherit">Inherit from Parent</option>
+            </select>
+        </div>
+        <div class="settingsElement">
+            <t>Information</t>
+            <ul>
+                <li>This note was created on 01.01.1970 at 00:00 O'Clock</li>
+                <li>This note was last modified on 01.01.1970 at 00:00 O'Clock</li>
+                <li>This note contains 0 text characters</li>
+                <li>This note contains 0 line strokes</li>
+                <li>The note has a size of 0 kB</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="dialog hidden" id="calendarDialog" onclick="closeDialog(this)">
+    <div onclick="event.stopPropagation()">
+        <div class="titleBar">
+            <t>Add Event</t>
+            <button class="imageButton" onclick="closeDialog(this)">
+                <img class="tinted" style="--src: url(src/close.png)" />
+                <div class="tooltip left">Close Window</div>
+            </button>
+        </div>
+        <div class="settingsElement">
+            <t>Name</t>
+            <t>What is happening on this day? Leave empty to remove event</t>
+            <div class="textinput inputBar empty" id="calendarEventInput" style="--src: url(src/note.png); --placeholder: &quot;Name&quot;" contenteditable="true"></div>
+            <button id="calendarEventSaveButton">Save</button>
+        </div>
+    </div>
+</div>
+
+<div class="dialog hidden" id="newElementDialog" onclick="closeDialog(this)">
+    <div onclick="event.stopPropagation()">
+        <div class="titleBar">
+            <t>Create New Note or Folder</t>
+            <button class="imageButton" onclick="closeDialog(this)">
+                <img class="tinted" style="--src: url(src/close.png)" />
+                <div class="tooltip left">Close Window</div>
+            </button>
+        </div>
+        <div class="settingsElement">
+            <t>What do you wanna create?</t>
+            <t>New elements will be added at the same level as the currently selected element</t>
+            <div style="display: flex">
+                <button class="secondary big" id="newNoteButton">
+                    <img class="tinted" style="--src: url(src/note.png)" />
+                    <t>Note</t>
+                </button>
+                <button class="secondary big" id="newFolderButton">
+                    <img class="tinted" style="--src: url(src/folder.png)" />
+                    <t>Folder</t>
+                </button>
+            </div>
+        </div>
+        <div class="settingsElement">
+            <t>Load Shared Note</t>
+            <t>Enter the code to load the shared note</t>
+            <div class="textinput inputBar empty" id="sharedNoteCodeInput" style="--src: url(src/note.png); --placeholder: &quot;Code&quot;" contenteditable="true"></div>
+            <button id="sharedNoteLoadButton">Load</button>
+        </div>
+        <!-- <div class="settingsElement">
+            <t>Import Document</t>
+            <t>Add an Document to your current note</t>
+            <div style="display: flex">
+                <button class="secondary big" id="">
+                    <img class="tinted" style="--src: url(src/note.png)" />
+                    <t>PDF</t>
+                </button>
+                <button class="secondary big" id="">
+                    <img class="tinted" style="--src: url(src/folder.png)" />
+                    <t>Image</t>
+                </button>
+            </div>
+            </div> -->
+    </div>
+</div>
+
+<div class="dialog hidden" id="toastDialog" onclick="closeDialog(this)">
+    <div onclick="event.stopPropagation()">
+        <div class="titleBar">
+            <t>Title</t>
+            <button class="imageButton" onclick="closeDialog(this)">
+                <img class="tinted" style="--src: url(src/close.png)" />
+                <div class="tooltip left">Close Window</div>
+            </button>
+        </div>
+        <t>Text</t>
+    </div>
+</div>

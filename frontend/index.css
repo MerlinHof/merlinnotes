@@ -1,0 +1,1050 @@
+:root {
+    --theme-color: rgba(230, 230, 240);
+    --text-color: black;
+    --background: rgba(255, 255, 255);
+    --background-muted: rgba(255, 255, 255, 0.5);
+    --outline: rgb(0, 0, 0, 0.2);
+    --outline-muted: rgb(0, 0, 0, 0.1);
+    --line-color: rgba(0, 0, 0, 0.08);
+    --icon-tint: rgb(0, 0, 0);
+    --select-color: rgba(255, 255, 255, 1);
+    --text-selection-color: rgb(0, 0, 0);
+
+    --line-height: 26px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --theme-color: rgb(0, 0, 0);
+        --text-color: rgb(255, 255, 255);
+        --background: rgba(255, 255, 255, 0.25);
+        --background-muted: rgba(255, 255, 255, 0.1);
+        --outline: rgb(255, 255, 255, 0.2);
+        --outline-muted: rgb(255, 255, 255, 0.08);
+        --line-color: rgba(255, 255, 255, 0.1);
+        --icon-tint: rgb(255, 255, 255);
+        --select-color: rgba(255, 255, 255, 0.25);
+        --text-selection-color: rgb(0, 0, 0);
+    }
+}
+
+html,
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: var(--theme-color);
+    color: var(--text-color);
+    touch-action: manipulation;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+::selection {
+    background: var(--text-selection-color);
+}
+
+* {
+    font-family: system-ui;
+    font-size: 14px;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: default;
+    touch-action: manipulation;
+}
+
+#mainContainer {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+    gap: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards 0.1s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.centerPanel {
+    width: 50px;
+    flex-grow: 12;
+    max-width: 840px;
+    transition: opacity 0.2s;
+}
+.centerPanel.hidden {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+#editor {
+    height: 100%;
+    overflow-y: scroll;
+    margin: 0 auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    padding: 20px;
+    padding-top: 40px;
+    padding-bottom: 80vh;
+    box-sizing: border-box;
+    outline: none;
+    cursor: text;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+    tab-size: 2;
+    z-index: 0;
+    opacity: 0.91;
+
+    line-height: var(--line-height);
+    background: linear-gradient(to bottom, var(--line-color) 0, var(--line-color) 1px, transparent 1px, transparent var(--line-height));
+    background-size: 100% var(--line-height);
+    background-position: 0 8px;
+    background-attachment: local;
+    background-repeat: repeat;
+}
+#editor * {
+    font-size: inherit;
+    font-family: inherit;
+    cursor: text;
+}
+#editor::first-line {
+    font-weight: bold;
+    font-size: 140%;
+    opacity: 1;
+}
+
+#calendarPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: scroll;
+    margin: 0 auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+#calendarPanel.hidden {
+    display: none;
+}
+#calendarPanel * {
+    flex-shrink: 0;
+}
+#calendarYearSelector {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: auto;
+    font-weight: bold;
+    border: 1px solid var(--outline-muted);
+}
+#calendarRenderContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+}
+.calendarMonthContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid var(--outline-muted);
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    margin: 20px 0px;
+    border-radius: 24px;
+}
+.calendarMonthName {
+    font-weight: bold;
+    font-size: 140%;
+    margin: 20px;
+    margin-bottom: 40px;
+}
+.calendarWeekdayRow {
+    display: flex;
+    width: 100%;
+    opacity: 0.4;
+    margin-bottom: 10px;
+}
+.calendarWeekdayRow > div {
+    width: 10px;
+    flex-grow: 1;
+    text-align: center;
+}
+.calendarDayContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+}
+.calendarDayBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 14px;
+    background-color: var(--background-muted);
+    border: 2px solid var(--outline-muted);
+    padding: 10px;
+    margin: 3px;
+    text-align: center;
+    height: 30px;
+    width: auto;
+    cursor: pointer;
+}
+.calendarDayBox > * {
+    cursor: pointer;
+}
+.calendarDayBox > t {
+    opacity: 0.5;
+    font-size: 80%;
+}
+.calendarDayBox > t:first-child {
+    font-size: unset;
+    font-weight: bold;
+    opacity: 1;
+}
+.calendarDayBox.today {
+    border: 2px dashed var(--outline);
+}
+.calendarDayBox.highlighted {
+    background-color: var(--background);
+    border: 2px solid var(--outline);
+}
+.calendarDayBox:active {
+    opacity: 0.5;
+}
+
+#canvasContainer {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    box-sizing: border-box;
+    overscroll-behavior: none;
+    touch-action: none;
+    z-index: 5;
+    opacity: 1;
+    transition: opacity 0.2s;
+
+    background:
+        linear-gradient(to bottom, var(--line-color) 0, var(--line-color) 1px, transparent 1px, transparent var(--gridsize)),
+        linear-gradient(to right, var(--line-color) 0, var(--line-color) 1px, transparent 1px, transparent var(--gridsize));
+    background-size: var(--gridsize) var(--gridsize);
+    background-position: var(--offsetx) var(--offsety);
+    background-attachment: local;
+    background-repeat: repeat;
+}
+#canvasContainer.inactive {
+    z-index: 0;
+    opacity: 0;
+    background: none;
+    pointer-events: none;
+}
+#committedCanvas,
+#liveCanvas {
+    width: 100%;
+    min-height: 100%;
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: crosshair;
+}
+#committedCanvas {
+    pointer-events: none;
+}
+
+.sidebar {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 350px;
+    box-sizing: border-box;
+    height: calc(100% - 20px);
+    top: 0px;
+    background-color: var(--background-muted);
+    padding: 20px;
+    margin: 10px 0px;
+    border-radius: 24px;
+    overflow-y: scroll;
+    transition: 0.2s;
+    z-index: 100;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--outline-muted);
+
+    align-self: flex-start;
+    justify-self: flex-start;
+
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+}
+.sidebar > :first-child {
+    margin-top: 0px;
+}
+@media (max-width: 800px) {
+    .sidebar {
+        position: absolute;
+    }
+    #sidebar1 {
+        left: 0px;
+        z-index: 100;
+    }
+    #sidebar2 {
+        right: 0px;
+        z-index: 99;
+    }
+}
+
+.hideButton {
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    margin: 0px;
+    position: absolute;
+    top: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-muted);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    z-index: 120;
+    transition: 0.2s;
+    border: 1px solid var(--outline-muted);
+}
+.hideButton img {
+    width: 14px;
+    height: 14px;
+    opacity: 0.3;
+    margin: 0px;
+}
+#hideButton1 {
+    left: 3px;
+    transform: rotate(-135deg);
+}
+#hideButton2 {
+    right: 3px;
+    transform: rotate(-45deg);
+}
+
+button {
+    background-color: var(--text-color);
+    color: var(--theme-color);
+    border: none;
+    outline: none;
+    border-radius: 100px;
+    padding: 5px 15px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    position: relative;
+}
+button img {
+    width: 14px;
+    height: 14px;
+    margin: 0px;
+    pointer-events: none;
+    margin-right: 8px;
+    margin-left: -4px;
+    opacity: 0.5;
+}
+button:active {
+    opacity: 0.5;
+}
+button t {
+    pointer-events: none;
+}
+
+button.secondary {
+    background-color: var(--background-muted);
+    color: var(--text-color);
+    box-shadow: inset 0px 0px 0px 1px var(--outline-muted);
+}
+button.secondary.selected {
+    background-color: var(--select-color);
+    box-shadow: inset 0px 0px 0px 2px var(--outline);
+}
+button.red {
+    background-color: rgb(220, 0, 100);
+    color: white;
+}
+.tooltip {
+    position: absolute;
+    z-index: 2000;
+    left: calc(50% + 25px);
+    top: 50%;
+    transform: translateY(-50%);
+    /*background-color: var(--background);
+    color: var(--text-color);*/
+    background-color: var(--text-color);
+    color: var(--theme-color);
+    border: 1px solid var(--outline-muted);
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 80%;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    scale: 0.5;
+    transform-origin: 0px 0px;
+    transition: 0.2s;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+.tooltip.left,
+#toolbar.r .tooltip {
+    left: unset;
+    right: calc(50% + 25px);
+    transform-origin: 100% 0px;
+}
+.tooltip.bottom,
+#toolbar.t .tooltip,
+.buttonGroup.tabContainer .tooltip {
+    top: unset;
+    bottom: -80%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.tooltip.top,
+#toolbar.b .tooltip {
+    top: -80%;
+    bottom: unset;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: 0% 100%;
+}
+button:hover .tooltip {
+    opacity: 1;
+    scale: 1;
+}
+
+.imageButton {
+    background-color: transparent;
+    margin: 0px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+.imageButton img {
+    width: 20px;
+    height: 20px;
+    margin: 0px;
+    opacity: 0.8;
+}
+.imageButton:hover {
+    background-color: var(--background-muted);
+    box-shadow: inset 0px 0px 0px 1px var(--outline-muted);
+}
+.imageButton.selected {
+    background-color: var(--background);
+    background-color: var(--select-color);
+    box-shadow: inset 0px 0px 0px 2px var(--outline);
+}
+
+button.big {
+    border-radius: 14px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 4px;
+    padding: 12px;
+    min-height: 80px;
+    min-width: 80px;
+}
+button.big img {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+    margin: 0px !important;
+}
+button.big t {
+    opacity: 0.5;
+    margin-top: 8px;
+}
+
+#toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: absolute;
+    position: relative;
+    z-index: 20;
+    margin: 0px;
+}
+#toolbar.t {
+    flex-direction: row;
+    margin-top: 10px;
+}
+#toolbar.b {
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+#toolbar.t > .buttonGroup,
+#toolbar.b > .buttonGroup {
+    flex-direction: row;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-muted);
+    border: 1px solid var(--outline-muted);
+    border-radius: 100px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
+}
+
+.buttonGroup.tabContainer {
+    flex-direction: row;
+    align-self: center;
+    justify-self: center;
+    z-index: 30;
+}
+
+#aiButtonContainer {
+    display: flex;
+    gap: 6px;
+}
+
+#promptTabContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 20px;
+}
+#promptTabContainer button {
+    margin: 0px;
+}
+
+.minititle {
+    margin: 0px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    opacity: 0.5;
+    display: block;
+}
+
+.textinput {
+    padding: 10px 20px;
+    background-color: var(--background-muted);
+    border-radius: 24px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    cursor: text;
+}
+
+#fileContainer {
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: -20px;
+    margin-top: 0px;
+    padding: 20px 20px;
+}
+#fileContainer::-webkit-scrollbar {
+    display: none;
+}
+.file {
+    background-color: var(--background-muted);
+    padding: 7px;
+    margin: 4px 0px;
+    margin-right: 2px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition:
+        all 0.2s,
+        opacity 0s,
+        background-color 0s,
+        box-shadow 0s;
+    box-shadow: inset 0px 0px 0px 1px var(--outline-muted);
+    box-sizing: border-box;
+
+    /*box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--outline-muted);*/
+}
+.file,
+.file * {
+    cursor: pointer;
+}
+.file:active {
+    opacity: 0.5;
+}
+
+.file.selected {
+    background-color: var(--select-color);
+    box-shadow: inset 0px 0px 0px 2px var(--outline);
+}
+.file.selected.outlined {
+    outline: 2px dashed var(--text-color);
+    outline-offset: -2px;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    margin-right: 6px;
+    opacity: 0.4;
+    flex-shrink: 0;
+}
+.icon.sharedIcon {
+    margin-left: 6px;
+    margin-right: 0px;
+}
+.icon.lockicon {
+    margin-left: 6px;
+    margin-right: 0px;
+}
+.file.selected img {
+    opacity: 1;
+}
+.file t {
+    /*text-overflow: ellipsis;*/
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 16px;
+    width: auto;
+}
+
+.pinButton {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 5px;
+    z-index: 8;
+    margin-right: 4px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .file:hover .pinButton,
+    .foldertitlebar:hover .pinButton {
+        opacity: 0.2;
+    }
+}
+.file.selected .pinButton,
+.folder.selected > .foldertitlebar .pinButton {
+    opacity: 0.2;
+}
+.file.pinned .pinButton,
+.folder.pinned > .foldertitlebar .pinButton {
+    opacity: 1;
+}
+
+.folder {
+    margin: 10px 0px;
+    padding-left: 20px;
+    position: relative;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+.folder::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 3px;
+    top: 32px;
+    bottom: 10px;
+    left: 9px;
+    border-radius: 10px;
+    background-color: var(--text-color);
+    opacity: 0.1;
+}
+.folder.selected::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    border-radius: 10px;
+    background-color: var(--background-muted);
+    border: 1px solid var(--outline-muted);
+    z-index: -1;
+}
+.folder.selected.outlined {
+    outline: dashed 2px var(--text-color);
+    outline-offset: -2px;
+}
+.folder.selected > .foldertitlebar .minititle {
+    color: var(--text-color);
+}
+.folder .minititle {
+    margin: 2px;
+    cursor: pointer;
+}
+.folder .minititle:active {
+    opacity: 0.5;
+}
+
+.foldertitlebar {
+    display: flex;
+    align-items: center;
+    margin-left: -22px;
+    width: calc(100% + 22px);
+}
+.foldertitlebar .arrow {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    margin: 0px 5px;
+    transform: rotate(90deg);
+    opacity: 0.5;
+    transition: transform 0.2s;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.foldertitlebar .arrow:active {
+    opacity: 0.25;
+}
+.foldertitlebar .minititle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+.folderCount {
+    font-size: 80%;
+    background-color: var(--background);
+    opacity: 0.5;
+    margin-left: 10px;
+    border-radius: 10px;
+    padding: 2px 8px;
+    box-shadow: inset 0px 0px 0px 1px var(--outline-muted);
+}
+
+.folder.collapsed > *:not(:first-child) {
+    max-height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    opacity: 0;
+    border-width: 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+.folder.collapsed .arrow {
+    transform: rotate(0deg);
+}
+
+.textblur t {
+    color: transparent;
+    background-color: var(--text-color);
+    border-radius: 4px;
+    opacity: 0.2;
+}
+
+.inputBar {
+    padding-left: 40px;
+    margin-bottom: 0px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    border: 1px solid var(--outline-muted);
+    z-index: 10;
+}
+.inputBar::before {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-size: contain;
+    margin-left: -25px;
+    opacity: 0.5;
+    background-color: var(--icon-tint);
+    -webkit-mask-image: var(--src);
+    mask-image: var(--src);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+}
+.inputBar:empty::after {
+    content: var(--placeholder);
+    opacity: 0.5;
+}
+
+input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: none;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--outline);
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+.tinted {
+    background-color: var(--icon-tint);
+    -webkit-mask-image: var(--src);
+    mask-image: var(--src);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+}
+
+#aiPromptInput {
+    margin: 10px 0px;
+    max-height: 130px;
+    overflow-y: scroll;
+    border: 1px solid var(--outline-muted);
+}
+#aiPromptInput:empty::after {
+    content: "Enter Prompt";
+    opacity: 0.5;
+}
+
+#aiChatSectionContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+#aiChatSectionContainer > div:first-of-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    z-index: 10;
+}
+
+#aiChatSelector {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#aiChatInput {
+    max-height: 130px;
+    overflow-y: scroll;
+    box-sizing: border-box;
+}
+#aiChatInputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+    z-index: 10;
+}
+#aiChatMessageContainer {
+    width: 100%;
+    flex-grow: 10;
+    height: 100%;
+    margin-top: -20px;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+    padding: 50px 0px;
+    display: flex;
+    flex-direction: column;
+}
+#aiChatMessageContainer:first-child {
+    margin-top: 0px;
+}
+#aiChatMessageContainer .left,
+#aiChatMessageContainer .right {
+    height: auto;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    word-wrap: normal;
+    margin-bottom: 10px;
+}
+#aiChatMessageContainer .left {
+    display: block;
+}
+#aiChatMessageContainer .right {
+    margin-top: 10px;
+    width: auto;
+    align-self: flex-end;
+    background-color: var(--background-muted);
+    border: 1px solid var(--outline-muted);
+    padding: 8px 16px;
+    border-radius: 14px;
+    margin-left: 20px;
+}
+#aiChatMessageContainer .hint {
+    opacity: 0.5;
+}
+
+#aiPromptAnswerText {
+    width: 100%;
+    flex-grow: 10;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding: 50px 0px;
+}
+
+.fadingEdgesVertical {
+    --fade-length: 50px;
+    mask-image: linear-gradient(to bottom, transparent, black var(--fade-length), black calc(100% - var(--fade-length)), transparent);
+}
+.fadingEdgesTop {
+    --fade-length: 50px;
+    mask-image: linear-gradient(to top, black 0%, black calc(100% - var(--fade-length)), transparent);
+}
+
+.dialog {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.dialog.hidden {
+    display: none;
+}
+.dialog > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--background-muted);
+    padding: 20px;
+    min-width: 30vw;
+    max-width: 500px;
+    width: auto;
+    border-radius: 24px;
+    border: 1px solid var(--outline-muted);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    max-height: 500px;
+    overflow: scroll;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
+}
+
+.dialog .titleBar {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+.dialog .titleBar t {
+    font-size: 140%;
+    font-weight: bold;
+}
+.dialog .titleBar .imageButton {
+    position: absolute;
+    right: 0;
+}
+.dialog .titleBar .imageButton img {
+    width: 14px;
+    height: 14px;
+}
+
+.dialog .settingsElement {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 10px 0px;
+    gap: 8px;
+    box-sizing: border-box;
+    border: 1px solid var(--outline-muted);
+    border-radius: 24px;
+    padding: 16px 20px;
+}
+.dialog .settingsElement > t {
+    opacity: 0.5;
+    margin-top: 10px;
+}
+.dialog .settingsElement > t:nth-of-type(2) {
+    margin: 0px;
+}
+.dialog .settingsElement > t:nth-of-type(1) {
+    margin: 0px;
+    font-weight: bold;
+    opacity: 1;
+}
+
+select {
+    width: 50%;
+    min-width: 100px;
+    max-width: 300px;
+    height: 30px;
+    color: var(--text-color);
+    background-color: var(--background-muted);
+    border: none;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--outline-muted);
+}
+
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin-right: 6px;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Merlin Notes",
+  "short_name": "Merlin Notes",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#00000000",
+  "theme_color": "#00000000",
+  "description": "A fast and clean ai assisted note-taking app",
+  "icons": [{ "src": "/src/icon.png", "sizes": "512x512", "type": "image/png" }],
+  "categories": ["productivity"]
+}
