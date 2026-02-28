@@ -94,7 +94,7 @@ if (Object.keys(ai.getPrompts()).length == 0) {
 }
 
 // Prepare Welcome Note
-if (fm.getFolderContents("main").length <= 1) {
+if (fm.getFolderContents("main").length < 1) {
   fm.createNote(
     "welcome",
     "Welcome to Merlin Notes 🫶\n\nMerlin Notes is a focused, AI-augmented thinking tool.\n\nReady to capture ideas, write books, journal, organize thoughts, and help you create? The powerful Ai-Tools can help you to summarize, expand, extract tasks, polish, translate, brainstorm, or create outlines — the polished UI moves into the background to let you focus on your content without distractions.",
