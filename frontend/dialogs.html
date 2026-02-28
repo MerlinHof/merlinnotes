@@ -17,10 +17,15 @@
         <div class="settingsElement">
             <t>Cloud Syncing</t>
             <t
-                >The library is securely synchronized with the server using these credentials. To connect your library to another device, copy this text and paste it on the other device; the local and
-                remote libraries on the other device will be merged and synced.</t
+                >The library is securely synchronized with the server using these credentials. To connect your library to another device, copy this text and paste it on the other
+                device; the local and remote libraries on the other device will be merged and synced.</t
             >
-            <div class="textinput inputBar empty" id="cloudSyncCredentialsInput" style="--src: url(src/sync.png); --placeholder: &quot;Cloud Sync Credentials&quot;" contenteditable="true"></div>
+            <div
+                class="textinput inputBar empty"
+                id="cloudSyncCredentialsInput"
+                style="--src: url(src/sync.png); --placeholder: &quot;Cloud Sync Credentials&quot;"
+                contenteditable="true"
+            ></div>
             <button onclick="copyCredentials()">Copy Credentials</button>
         </div>
         <div class="settingsElement">
@@ -39,7 +44,12 @@
             <t>Model Name:</t>
             <div class="textinput inputBar empty" id="modelnameinput" style="--src: url(src/ai.png); --placeholder: &quot;Model Name&quot;" contenteditable="true"></div>
             <t>Reasoning Effort:</t>
-            <div class="textinput inputBar empty" id="reasoningeffortinput" style="--src: url(src/thinking.png); --placeholder: &quot;Reasoning Effort&quot;" contenteditable="true"></div>
+            <div
+                class="textinput inputBar empty"
+                id="reasoningeffortinput"
+                style="--src: url(src/thinking.png); --placeholder: &quot;Reasoning Effort&quot;"
+                contenteditable="true"
+            ></div>
         </div>
         <div class="settingsElement">
             <t>Editor Customization</t>
@@ -90,6 +100,10 @@
                 <div><input type="checkbox" id="showhiddenfilescheckbox" /><t>Show Hidden Files</t></div>
                 <div><input type="checkbox" id="autocollapsecheckbox" /><t>Collapse Folders on Reload</t></div>
             </div>
+            <button class="imageButton" onclick="toggleFullscreen()">
+                <img class="tinted" style="--src: url(src/fullscreen.png)" />
+                <div class="tooltip">Toggle fullscreen mode</div>
+            </button>
             <button class="red" onclick="clearAllData()">Delete all Data</button>
         </div>
     </div>
@@ -182,14 +196,17 @@
         <div class="settingsElement">
             <t>Password Lock</t>
             <t>
-                Lock the note / folder to prevent its contents to be seen without permission. Be aware that this is a soft lock and that it does not encrypt the contents or enforces the lock
-                aggressively. If you lock a folder, all children are also locked. Leave empty to unlock the element.
+                Lock the note / folder to prevent its contents to be seen without permission. Be aware that this is a soft lock and that it does not encrypt the contents or
+                enforces the lock aggressively. If you lock a folder, all children are also locked. Leave empty to unlock the element.
             </t>
             <div class="textinput inputBar empty" id="notePasswordInput" style="--src: url(src/lock.png); --placeholder: &quot;Password&quot;" contenteditable="true"></div>
         </div>
         <div class="settingsElement">
             <t>Share & Collaborate</t>
-            <t> Share either a static copy of the current state of your note or folder, or create a collaboration code for your note or folder, where all changes are synced in real time. </t>
+            <t>
+                Share either a static copy of the current state of your note or folder, or create a collaboration code for your note or folder, where all changes are synced in real
+                time.
+            </t>
             <div style="display: flex">
                 <button class="secondary big" onclick="shareNote()">
                     <img class="tinted" style="--src: url(src/note.png)" />

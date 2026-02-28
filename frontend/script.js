@@ -619,8 +619,6 @@ document.getElementById("strokeColorButton").onclick = () => {
 };
 
 function toggleFullscreen() {
-  openDialog("upgradeDialog");
-  return;
   if (isFullscreen()) {
     closeFullscreen();
   } else {
