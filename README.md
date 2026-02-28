@@ -36,3 +36,7 @@ Merlin Notes runs entirely in the browser using vanilla web technologies.
 ## 🔒 Privacy & Security
 
 Your data is yours. Merlin Notes is designed to be local-first. Notes are stored on your device, and cloud synchronization uses your unique, randomized Sync ID and Key. API calls to AI providers are made directly from your browser using the API key you provide.
+
+## 🤖 Note
+
+This README was created entirely by an LLM based on the codebase. Will be updated to a human-version soon
